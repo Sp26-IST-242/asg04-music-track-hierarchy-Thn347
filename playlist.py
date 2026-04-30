@@ -11,3 +11,30 @@ Design notes:
   • __str__ uses a generator expression with str.join() for a concise
     multi-line string without building an intermediate list manually.
 """
+from music_track import MusicTrack
+
+
+class Playlist:
+    def __init__(self):
+        self._tracks: list[MusicTrack] = []
+
+    @property
+    def tracks(self) -> list[MusicTrack]:
+        # Return a defensive copy
+        return list(self._tracks)
+
+    def add_track(self, track: MusicTrack) -> None:
+        self._tracks.append(track)
+
+    def clear_playlist(self) -> None:
+        # Must NOT set _tracks to None
+        self._tracks.clear()
+
+    def sort_by_release_year(self) -> None:
+        # Relies on MusicTrack.__lt__
+        self._tracks.sort()
+
+    def __str__(self) -> str:
+        if not self._tracks:
+            return ""
+        return "\n".join(str(t) for t in self._tracks)
