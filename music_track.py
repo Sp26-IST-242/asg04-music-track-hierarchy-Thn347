@@ -17,3 +17,58 @@ Design decisions to implement:
   • __hash__ is defined to stay consistent with __eq__ (Python sets __hash__ to
     None when you define __eq__, making objects unhashable unless you fix it).
 """
+from abc import ABC, abstractmethod
+from functools import total_ordering
+
+
+@total_ordering
+class MusicTrack(ABC):
+    def __init__(self, artist, album, duration_seconds: float):
+        self._artist = artist
+        self._album = album
+        self._duration_seconds = duration_seconds
+
+    # -------------------------
+    # Properties
+    # -------------------------
+    @property
+    def artist(self):
+        return self._artist
+
+    @property
+    def album(self):
+        return self._album
+
+    @property
+    def duration_seconds(self) -> float:
+        return self._duration_seconds
+
+    @property
+    def release_year(self) -> int:
+        return self._album.years[0]
+
+    # -------------------------
+    # Abstract method
+    # -------------------------
+    @abstractmethod
+    def play_time_formatted(self) -> str:
+        pass
+
+    # -------------------------
+    # Concrete method
+    # -------------------------
+    def total_play_time(self, num_plays: int) -> float:
+        return self._duration_seconds * num_plays
+
+    # -------------------------
+    # Comparison methods
+    # -------------------------
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, MusicTrack):
+            return NotImplemented
+        return self.release_year == other.release_year
+
+    def __lt__(self, other) -> bool:
+        if not isinstance(other, MusicTrack):
+            return NotImplemented
+        return self.release_year < other.release_year
