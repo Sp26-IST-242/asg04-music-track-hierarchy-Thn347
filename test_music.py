@@ -656,166 +656,166 @@ class TestPlaylist:
         assert "\n" not in s
 
 
-# # =============================================================================
-# #  Integration / end-to-end tests
-# # =============================================================================
+# =============================================================================
+#  Integration / end-to-end tests
+# =============================================================================
 
-# class TestIntegration:
+class TestIntegration:
 
-#     def test_full_workflow_before_sort_insertion_order(self):
-#         """Tracks should appear in insertion order before sorting."""
-#         kendrick = Artist("Kendrick Lamar", "Hip-Hop")
-#         alanis   = Artist("Alanis Morissette", "Alternative")
-#         rogan    = Artist("Joe Rogan", "Comedy")
-#         koenig   = Artist("Sarah Koenig", "Journalism")
+    def test_full_workflow_before_sort_insertion_order(self):
+        """Tracks should appear in insertion order before sorting."""
+        kendrick = Artist("Kendrick Lamar", "Hip-Hop")
+        alanis   = Artist("Alanis Morissette", "Alternative")
+        rogan    = Artist("Joe Rogan", "Comedy")
+        koenig   = Artist("Sarah Koenig", "Journalism")
 
-#         humble          = Song(kendrick, Album("DAMN.", True,  [2017, 2018]), 220.0)
-#         you_oughta_know = Song(alanis,   Album("Jagged Little Pill", False, [1995, 1996]), 245.0)
-#         jre_ep          = Podcast(rogan,  Album("The Joe Rogan Experience", True,  [2009, 2010]), 9000.0, is_explicit=True)
-#         serial_ep       = Podcast(koenig, Album("Serial", False, [2014, 2015]), 5400.0)
+        humble          = Song(kendrick, Album("DAMN.", True,  [2017, 2018]), 220.0)
+        you_oughta_know = Song(alanis,   Album("Jagged Little Pill", False, [1995, 1996]), 245.0)
+        jre_ep          = Podcast(rogan,  Album("The Joe Rogan Experience", True,  [2009, 2010]), 9000.0, is_explicit=True)
+        serial_ep       = Podcast(koenig, Album("Serial", False, [2014, 2015]), 5400.0)
 
-#         p = Playlist()
-#         for track in [humble, you_oughta_know, jre_ep, serial_ep]:
-#             p.add_track(track)
+        p = Playlist()
+        for track in [humble, you_oughta_know, jre_ep, serial_ep]:
+            p.add_track(track)
 
-#         before = p.tracks
-#         assert before[0].album.title == "DAMN."
-#         assert before[1].album.title == "Jagged Little Pill"
-#         assert before[2].album.title == "The Joe Rogan Experience"
-#         assert before[3].album.title == "Serial"
+        before = p.tracks
+        assert before[0].album.title == "DAMN."
+        assert before[1].album.title == "Jagged Little Pill"
+        assert before[2].album.title == "The Joe Rogan Experience"
+        assert before[3].album.title == "Serial"
 
-#     def test_full_workflow_after_sort_order(self):
-#         """After sorting, tracks must appear in ascending release-year order."""
-#         kendrick = Artist("Kendrick Lamar", "Hip-Hop")
-#         alanis   = Artist("Alanis Morissette", "Alternative")
-#         rogan    = Artist("Joe Rogan", "Comedy")
-#         koenig   = Artist("Sarah Koenig", "Journalism")
+    def test_full_workflow_after_sort_order(self):
+        """After sorting, tracks must appear in ascending release-year order."""
+        kendrick = Artist("Kendrick Lamar", "Hip-Hop")
+        alanis   = Artist("Alanis Morissette", "Alternative")
+        rogan    = Artist("Joe Rogan", "Comedy")
+        koenig   = Artist("Sarah Koenig", "Journalism")
 
-#         humble          = Song(kendrick, Album("DAMN.", True,  [2017, 2018]), 220.0)
-#         you_oughta_know = Song(alanis,   Album("Jagged Little Pill", False, [1995, 1996]), 245.0)
-#         jre_ep          = Podcast(rogan,  Album("The Joe Rogan Experience", True,  [2009, 2010]), 9000.0, is_explicit=True)
-#         serial_ep       = Podcast(koenig, Album("Serial", False, [2014, 2015]), 5400.0)
+        humble          = Song(kendrick, Album("DAMN.", True,  [2017, 2018]), 220.0)
+        you_oughta_know = Song(alanis,   Album("Jagged Little Pill", False, [1995, 1996]), 245.0)
+        jre_ep          = Podcast(rogan,  Album("The Joe Rogan Experience", True,  [2009, 2010]), 9000.0, is_explicit=True)
+        serial_ep       = Podcast(koenig, Album("Serial", False, [2014, 2015]), 5400.0)
 
-#         p = Playlist()
-#         for track in [humble, you_oughta_know, jre_ep, serial_ep]:
-#             p.add_track(track)
+        p = Playlist()
+        for track in [humble, you_oughta_know, jre_ep, serial_ep]:
+            p.add_track(track)
 
-#         p.sort_by_release_year()
-#         after = p.tracks
+        p.sort_by_release_year()
+        after = p.tracks
 
-#         assert after[0].album.title == "Jagged Little Pill"
-#         assert after[1].album.title == "The Joe Rogan Experience"
-#         assert after[2].album.title == "Serial"
-#         assert after[3].album.title == "DAMN."
+        assert after[0].album.title == "Jagged Little Pill"
+        assert after[1].album.title == "The Joe Rogan Experience"
+        assert after[2].album.title == "Serial"
+        assert after[3].album.title == "DAMN."
 
-#     def test_full_workflow_types_survive_sort(self):
-#         """Polymorphic types must be preserved after sorting."""
-#         p = Playlist()
-#         p.add_track(Song(
-#             Artist("Kendrick Lamar", "Hip-Hop"),
-#             Album("DAMN.", True, [2017, 2018]),
-#             220.0,
-#         ))
-#         p.add_track(Song(
-#             Artist("Alanis Morissette", "Alternative"),
-#             Album("Jagged Little Pill", False, [1995, 1996]),
-#             245.0,
-#         ))
-#         p.add_track(Podcast(
-#             Artist("Joe Rogan", "Comedy"),
-#             Album("The Joe Rogan Experience", True, [2009, 2010]),
-#             9000.0,
-#             is_explicit=True,
-#         ))
-#         p.add_track(Podcast(
-#             Artist("Sarah Koenig", "Journalism"),
-#             Album("Serial", False, [2014, 2015]),
-#             5400.0,
-#         ))
+    def test_full_workflow_types_survive_sort(self):
+        """Polymorphic types must be preserved after sorting."""
+        p = Playlist()
+        p.add_track(Song(
+            Artist("Kendrick Lamar", "Hip-Hop"),
+            Album("DAMN.", True, [2017, 2018]),
+            220.0,
+        ))
+        p.add_track(Song(
+            Artist("Alanis Morissette", "Alternative"),
+            Album("Jagged Little Pill", False, [1995, 1996]),
+            245.0,
+        ))
+        p.add_track(Podcast(
+            Artist("Joe Rogan", "Comedy"),
+            Album("The Joe Rogan Experience", True, [2009, 2010]),
+            9000.0,
+            is_explicit=True,
+        ))
+        p.add_track(Podcast(
+            Artist("Sarah Koenig", "Journalism"),
+            Album("Serial", False, [2014, 2015]),
+            5400.0,
+        ))
 
-#         p.sort_by_release_year()
-#         after = p.tracks
+        p.sort_by_release_year()
+        after = p.tracks
 
-#         assert isinstance(after[0], Song)       # Jagged Little Pill, 1995
-#         assert isinstance(after[1], Podcast)    # JRE, 2009
-#         assert isinstance(after[2], Podcast)    # Serial, 2014
-#         assert isinstance(after[3], Song)       # DAMN., 2017
+        assert isinstance(after[0], Song)       # Jagged Little Pill, 1995
+        assert isinstance(after[1], Podcast)    # JRE, 2009
+        assert isinstance(after[2], Podcast)    # Serial, 2014
+        assert isinstance(after[3], Song)       # DAMN., 2017
 
-#     def test_full_workflow_dually_status_preserved(self):
-#         """is_explicit values must survive the sort unchanged."""
-#         p = Playlist()
-#         p.add_track(Podcast(
-#             Artist("Joe Rogan", "Comedy"),
-#             Album("The Joe Rogan Experience", True, [2009, 2010]),
-#             9000.0,
-#             is_explicit=True,
-#         ))
-#         p.add_track(Podcast(
-#             Artist("Sarah Koenig", "Journalism"),
-#             Album("Serial", False, [2014, 2015]),
-#             5400.0,
-#             # is_explicit defaults to False
-#         ))
+    def test_full_workflow_dually_status_preserved(self):
+        """is_explicit values must survive the sort unchanged."""
+        p = Playlist()
+        p.add_track(Podcast(
+            Artist("Joe Rogan", "Comedy"),
+            Album("The Joe Rogan Experience", True, [2009, 2010]),
+            9000.0,
+            is_explicit=True,
+        ))
+        p.add_track(Podcast(
+            Artist("Sarah Koenig", "Journalism"),
+            Album("Serial", False, [2014, 2015]),
+            5400.0,
+            # is_explicit defaults to False
+        ))
 
-#         p.sort_by_release_year()
-#         after = p.tracks
+        p.sort_by_release_year()
+        after = p.tracks
 
-#         assert after[0].is_explicit is True    # JRE (2009) comes first
-#         assert after[1].is_explicit is False   # Serial (2014) comes second
+        assert after[0].is_explicit is True    # JRE (2009) comes first
+        assert after[1].is_explicit is False   # Serial (2014) comes second
 
-#     def test_full_workflow_wheel_counts(self):
-#         """play_time_formatted() must reflect each track's actual duration."""
-#         p = Playlist()
-#         p.add_track(Song(
-#             Artist("Kendrick Lamar", "Hip-Hop"),
-#             Album("DAMN.", True, [2017, 2018]),
-#             220.0,
-#         ))
-#         p.add_track(Podcast(
-#             Artist("Joe Rogan", "Comedy"),
-#             Album("The Joe Rogan Experience", True, [2009, 2010]),
-#             9000.0,
-#             is_explicit=True,
-#         ))
+    def test_full_workflow_wheel_counts(self):
+        """play_time_formatted() must reflect each track's actual duration."""
+        p = Playlist()
+        p.add_track(Song(
+            Artist("Kendrick Lamar", "Hip-Hop"),
+            Album("DAMN.", True, [2017, 2018]),
+            220.0,
+        ))
+        p.add_track(Podcast(
+            Artist("Joe Rogan", "Comedy"),
+            Album("The Joe Rogan Experience", True, [2009, 2010]),
+            9000.0,
+            is_explicit=True,
+        ))
 
-#         p.sort_by_release_year()
-#         after = p.tracks
+        p.sort_by_release_year()
+        after = p.tracks
 
-#         # JRE (2009) is now first — HH:MM:SS
-#         assert after[0].play_time_formatted() == "02:30:00"
-#         # DAMN. (2017) is now second — MM:SS
-#         assert after[1].play_time_formatted() == "03:40"
+        # JRE (2009) is now first — HH:MM:SS
+        assert after[0].play_time_formatted() == "02:30:00"
+        # DAMN. (2017) is now second — MM:SS
+        assert after[1].play_time_formatted() == "03:40"
 
-#     def test_full_workflow_total_play_time(self):
-#         """total_play_time() must work correctly on sorted tracks."""
-#         p = Playlist()
-#         p.add_track(Song(
-#             Artist("Alanis Morissette", "Alternative"),
-#             Album("Jagged Little Pill", False, [1995, 1996]),
-#             245.0,
-#         ))
-#         p.add_track(Podcast(
-#             Artist("Sarah Koenig", "Journalism"),
-#             Album("Serial", False, [2014, 2015]),
-#             5400.0,
-#         ))
+    def test_full_workflow_total_play_time(self):
+        """total_play_time() must work correctly on sorted tracks."""
+        p = Playlist()
+        p.add_track(Song(
+            Artist("Alanis Morissette", "Alternative"),
+            Album("Jagged Little Pill", False, [1995, 1996]),
+            245.0,
+        ))
+        p.add_track(Podcast(
+            Artist("Sarah Koenig", "Journalism"),
+            Album("Serial", False, [2014, 2015]),
+            5400.0,
+        ))
 
-#         p.sort_by_release_year()
-#         after = p.tracks
+        p.sort_by_release_year()
+        after = p.tracks
 
-#         assert after[0].total_play_time(2) == pytest.approx(490.0)    # Song 245 × 2
-#         assert after[1].total_play_time(3) == pytest.approx(16200.0)  # Podcast 5400 × 3
+        assert after[0].total_play_time(2) == pytest.approx(490.0)    # Song 245 × 2
+        assert after[1].total_play_time(3) == pytest.approx(16200.0)  # Podcast 5400 × 3
 
-#     def test_how_far_with_polymorphism(self):
-#         """
-#         total_play_time() is defined once in MusicTrack and inherited by both
-#         Song and Podcast — calling it on a mixed list should work for all.
-#         """
-#         tracks: list[MusicTrack] = [
-#             Song(Artist("A", "B"),    Album("C", True,  [2000]), 180.0),
-#             Podcast(Artist("D", "E"), Album("F", False, [2010]), 3600.0),
-#             Song(Artist("G", "H"),    Album("I", True,  [2020]), 240.0),
-#         ]
-#         expected = [180.0, 3600.0, 240.0]
-#         for track, exp in zip(tracks, expected):
-#             assert track.total_play_time(1) == pytest.approx(exp)
+    def test_how_far_with_polymorphism(self):
+        """
+        total_play_time() is defined once in MusicTrack and inherited by both
+        Song and Podcast — calling it on a mixed list should work for all.
+        """
+        tracks: list[MusicTrack] = [
+            Song(Artist("A", "B"),    Album("C", True,  [2000]), 180.0),
+            Podcast(Artist("D", "E"), Album("F", False, [2010]), 3600.0),
+            Song(Artist("G", "H"),    Album("I", True,  [2020]), 240.0),
+        ]
+        expected = [180.0, 3600.0, 240.0]
+        for track, exp in zip(tracks, expected):
+            assert track.total_play_time(1) == pytest.approx(exp)
