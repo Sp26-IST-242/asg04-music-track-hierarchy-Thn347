@@ -16,7 +16,7 @@ from album import Album
 from music_track import MusicTrack
 from song import Song
 from podcast import Podcast
-# from playlist import Playlist
+from playlist import Playlist
 
 
 # =============================================================================
@@ -486,174 +486,174 @@ class TestMusicTrackComparison:
         assert [t.release_year for t in result] == [1995, 2009, 2017]
 
 
-# # =============================================================================
-# #  Playlist tests
-# # =============================================================================
+# =============================================================================
+#  Playlist tests
+# =============================================================================
 
-# class TestPlaylist:
+class TestPlaylist:
 
-#     @pytest.fixture
-#     def full_playlist(self):
-#         """Build the same four-track playlist as main.py."""
-#         p = Playlist()
-#         p.add_track(Song(
-#             Artist("Kendrick Lamar", "Hip-Hop"),
-#             Album("DAMN.", True, [2017, 2018]),
-#             220.0,
-#         ))
-#         p.add_track(Song(
-#             Artist("Alanis Morissette", "Alternative"),
-#             Album("Jagged Little Pill", False, [1995, 1996]),
-#             245.0,
-#         ))
-#         p.add_track(Podcast(
-#             Artist("Joe Rogan", "Comedy"),
-#             Album("The Joe Rogan Experience", True, [2009, 2010]),
-#             9000.0,
-#             is_explicit=True,
-#         ))
-#         p.add_track(Podcast(
-#             Artist("Sarah Koenig", "Journalism"),
-#             Album("Serial", False, [2014, 2015]),
-#             5400.0,
-#         ))
-#         return p
+    @pytest.fixture
+    def full_playlist(self):
+        """Build the same four-track playlist as main.py."""
+        p = Playlist()
+        p.add_track(Song(
+            Artist("Kendrick Lamar", "Hip-Hop"),
+            Album("DAMN.", True, [2017, 2018]),
+            220.0,
+        ))
+        p.add_track(Song(
+            Artist("Alanis Morissette", "Alternative"),
+            Album("Jagged Little Pill", False, [1995, 1996]),
+            245.0,
+        ))
+        p.add_track(Podcast(
+            Artist("Joe Rogan", "Comedy"),
+            Album("The Joe Rogan Experience", True, [2009, 2010]),
+            9000.0,
+            is_explicit=True,
+        ))
+        p.add_track(Podcast(
+            Artist("Sarah Koenig", "Journalism"),
+            Album("Serial", False, [2014, 2015]),
+            5400.0,
+        ))
+        return p
 
-#     # --- add_track ---
+    # --- add_track ---
 
-#     def test_add_track_increases_count(self):
-#         p = Playlist()
-#         assert len(p.tracks) == 0
-#         p.add_track(Song(
-#             Artist("A", "B"),
-#             Album("C", True, [2020]),
-#             100.0,
-#         ))
-#         assert len(p.tracks) == 1
+    def test_add_track_increases_count(self):
+        p = Playlist()
+        assert len(p.tracks) == 0
+        p.add_track(Song(
+            Artist("A", "B"),
+            Album("C", True, [2020]),
+            100.0,
+        ))
+        assert len(p.tracks) == 1
 
-#     def test_add_track_multiple(self, full_playlist):
-#         assert len(full_playlist.tracks) == 4
+    def test_add_track_multiple(self, full_playlist):
+        assert len(full_playlist.tracks) == 4
 
-#     # --- tracks property returns a copy ---
+    # --- tracks property returns a copy ---
 
-#     def test_tracks_returns_copy(self):
-#         p = Playlist()
-#         p.add_track(Song(Artist("A", "B"), Album("C", True, [2020]), 100.0))
-#         external = p.tracks
-#         external.clear()
-#         assert len(p.tracks) == 1  # internal list unchanged
+    def test_tracks_returns_copy(self):
+        p = Playlist()
+        p.add_track(Song(Artist("A", "B"), Album("C", True, [2020]), 100.0))
+        external = p.tracks
+        external.clear()
+        assert len(p.tracks) == 1  # internal list unchanged
 
-#     def test_tracks_append_does_not_affect_playlist(self):
-#         p = Playlist()
-#         external = p.tracks
-#         external.append("this is not a MusicTrack")
-#         assert len(p.tracks) == 0
+    def test_tracks_append_does_not_affect_playlist(self):
+        p = Playlist()
+        external = p.tracks
+        external.append("this is not a MusicTrack")
+        assert len(p.tracks) == 0
 
-#     # --- clear_playlist ---
-#     def test_clear_playlist_empties_list(self, full_playlist):
-#         full_playlist.clear_playlist()
-#         assert len(full_playlist.tracks) == 0
+    # --- clear_playlist ---
+    def test_clear_playlist_empties_list(self, full_playlist):
+        full_playlist.clear_playlist()
+        assert len(full_playlist.tracks) == 0
 
-#     def test_clear_playlist_does_not_set_none(self, full_playlist):
-#         """After clearing, add_track must still work — internal list is not None."""
-#         full_playlist.clear_playlist()
-#         # If _tracks were set to None, this would raise AttributeError
-#         full_playlist.add_track(Song(
-#             Artist("A", "B"),
-#             Album("C", True, [2020]),
-#             100.0,
-#         ))
-#         assert len(full_playlist.tracks) == 1
+    def test_clear_playlist_does_not_set_none(self, full_playlist):
+        """After clearing, add_track must still work — internal list is not None."""
+        full_playlist.clear_playlist()
+        # If _tracks were set to None, this would raise AttributeError
+        full_playlist.add_track(Song(
+            Artist("A", "B"),
+            Album("C", True, [2020]),
+            100.0,
+        ))
+        assert len(full_playlist.tracks) == 1
 
-#     def test_clear_playlist_then_re_add(self, full_playlist):
-#         full_playlist.clear_playlist()
-#         full_playlist.add_track(Song(
-#             Artist("X", "Y"),
-#             Album("Z", False, [2000]),
-#             180.0,
-#         ))
-#         full_playlist.add_track(Song(
-#             Artist("P", "Q"),
-#             Album("R", True, [2005]),
-#             200.0,
-#         ))
-#         assert len(full_playlist.tracks) == 2
+    def test_clear_playlist_then_re_add(self, full_playlist):
+        full_playlist.clear_playlist()
+        full_playlist.add_track(Song(
+            Artist("X", "Y"),
+            Album("Z", False, [2000]),
+            180.0,
+        ))
+        full_playlist.add_track(Song(
+            Artist("P", "Q"),
+            Album("R", True, [2005]),
+            200.0,
+        ))
+        assert len(full_playlist.tracks) == 2
 
-#     # --- sort_by_release_year ---
+    # --- sort_by_release_year ---
 
-#     def test_sort_by_release_year_ascending(self, full_playlist):
-#         full_playlist.sort_by_release_year()
-#         years = [t.release_year for t in full_playlist.tracks]
-#         assert years == sorted(years)
+    def test_sort_by_release_year_ascending(self, full_playlist):
+        full_playlist.sort_by_release_year()
+        years = [t.release_year for t in full_playlist.tracks]
+        assert years == sorted(years)
 
-#     def test_sort_by_release_year_specific_order(self, full_playlist):
-#         full_playlist.sort_by_release_year()
-#         tracks = full_playlist.tracks
-#         assert tracks[0].release_year == 1995
-#         assert tracks[1].release_year == 2009
-#         assert tracks[2].release_year == 2014
-#         assert tracks[3].release_year == 2017
+    def test_sort_by_release_year_specific_order(self, full_playlist):
+        full_playlist.sort_by_release_year()
+        tracks = full_playlist.tracks
+        assert tracks[0].release_year == 1995
+        assert tracks[1].release_year == 2009
+        assert tracks[2].release_year == 2014
+        assert tracks[3].release_year == 2017
 
-#     def test_sort_by_release_year_first_track_type(self, full_playlist):
-#         """After sorting, the first track (1995) should be a Song."""
-#         full_playlist.sort_by_release_year()
-#         assert isinstance(full_playlist.tracks[0], Song)
+    def test_sort_by_release_year_first_track_type(self, full_playlist):
+        """After sorting, the first track (1995) should be a Song."""
+        full_playlist.sort_by_release_year()
+        assert isinstance(full_playlist.tracks[0], Song)
 
-#     def test_sort_by_release_year_last_track_type(self, full_playlist):
-#         """After sorting, the last track (2017) should be a Song."""
-#         full_playlist.sort_by_release_year()
-#         assert isinstance(full_playlist.tracks[3], Song)
+    def test_sort_by_release_year_last_track_type(self, full_playlist):
+        """After sorting, the last track (2017) should be a Song."""
+        full_playlist.sort_by_release_year()
+        assert isinstance(full_playlist.tracks[3], Song)
 
-#     def test_sort_preserves_all_tracks(self, full_playlist):
-#         """Sorting must not drop or duplicate any tracks."""
-#         full_playlist.sort_by_release_year()
-#         assert len(full_playlist.tracks) == 4
+    def test_sort_preserves_all_tracks(self, full_playlist):
+        """Sorting must not drop or duplicate any tracks."""
+        full_playlist.sort_by_release_year()
+        assert len(full_playlist.tracks) == 4
 
-#     def test_sort_already_sorted_playlist(self):
-#         """Sorting an already-sorted playlist should leave it unchanged."""
-#         p = Playlist()
-#         p.add_track(Song(Artist("A", "B"), Album("Early", False, [1990]), 180.0))
-#         p.add_track(Song(Artist("C", "D"), Album("Later", True,  [2000]), 200.0))
-#         p.sort_by_release_year()
-#         years = [t.release_year for t in p.tracks]
-#         assert years == [1990, 2000]
+    def test_sort_already_sorted_playlist(self):
+        """Sorting an already-sorted playlist should leave it unchanged."""
+        p = Playlist()
+        p.add_track(Song(Artist("A", "B"), Album("Early", False, [1990]), 180.0))
+        p.add_track(Song(Artist("C", "D"), Album("Later", True,  [2000]), 200.0))
+        p.sort_by_release_year()
+        years = [t.release_year for t in p.tracks]
+        assert years == [1990, 2000]
 
-#     def test_sort_single_track_playlist(self):
-#         """A playlist with one track should sort without error."""
-#         p = Playlist()
-#         p.add_track(Song(Artist("A", "B"), Album("C", True, [2005]), 150.0))
-#         p.sort_by_release_year()
-#         assert p.tracks[0].release_year == 2005
+    def test_sort_single_track_playlist(self):
+        """A playlist with one track should sort without error."""
+        p = Playlist()
+        p.add_track(Song(Artist("A", "B"), Album("C", True, [2005]), 150.0))
+        p.sort_by_release_year()
+        assert p.tracks[0].release_year == 2005
 
-#     def test_sort_empty_playlist(self):
-#         """Sorting an empty playlist should not raise any error."""
-#         p = Playlist()
-#         p.sort_by_release_year()
-#         assert len(p.tracks) == 0
+    def test_sort_empty_playlist(self):
+        """Sorting an empty playlist should not raise any error."""
+        p = Playlist()
+        p.sort_by_release_year()
+        assert len(p.tracks) == 0
 
-#     # --- __str__ ---
+    # --- __str__ ---
 
-#     def test_str_contains_all_track_names(self, full_playlist):
-#         s = str(full_playlist)
-#         assert "DAMN." in s
-#         assert "Jagged Little Pill" in s
-#         assert "The Joe Rogan Experience" in s
-#         assert "Serial" in s
+    def test_str_contains_all_track_names(self, full_playlist):
+        s = str(full_playlist)
+        assert "DAMN." in s
+        assert "Jagged Little Pill" in s
+        assert "The Joe Rogan Experience" in s
+        assert "Serial" in s
 
-#     def test_str_each_track_on_separate_line(self, full_playlist):
-#         s = str(full_playlist)
-#         lines = s.strip().split("\n")
-#         assert len(lines) == 4
+    def test_str_each_track_on_separate_line(self, full_playlist):
+        s = str(full_playlist)
+        lines = s.strip().split("\n")
+        assert len(lines) == 4
 
-#     def test_str_empty_playlist_is_empty_string(self):
-#         p = Playlist()
-#         assert str(p) == ""
+    def test_str_empty_playlist_is_empty_string(self):
+        p = Playlist()
+        assert str(p) == ""
 
-#     def test_str_single_track_no_newline(self):
-#         p = Playlist()
-#         p.add_track(Song(Artist("A", "B"), Album("C", True, [2020]), 100.0))
-#         s = str(p)
-#         assert "\n" not in s
+    def test_str_single_track_no_newline(self):
+        p = Playlist()
+        p.add_track(Song(Artist("A", "B"), Album("C", True, [2020]), 100.0))
+        s = str(p)
+        assert "\n" not in s
 
 
 # # =============================================================================
