@@ -390,100 +390,100 @@ class TestPodcast:
         assert isinstance(jre_explicit, MusicTrack)
 
 
-# # =============================================================================
-# #  Comparison / ordering tests
-# # =============================================================================
+# =============================================================================
+#  Comparison / ordering tests
+# =============================================================================
 
-# class TestMusicTrackComparison:
+class TestMusicTrackComparison:
 
-#     @pytest.fixture
-#     def song_1995(self):
-#         return Song(
-#             Artist("Alanis Morissette", "Alternative"),
-#             Album("Jagged Little Pill", False, [1995, 1996]),
-#             245.0,
-#         )
+    @pytest.fixture
+    def song_1995(self):
+        return Song(
+            Artist("Alanis Morissette", "Alternative"),
+            Album("Jagged Little Pill", False, [1995, 1996]),
+            245.0,
+        )
 
-#     @pytest.fixture
-#     def podcast_2009(self):
-#         return Podcast(
-#             Artist("Joe Rogan", "Comedy"),
-#             Album("The Joe Rogan Experience", True, [2009, 2010]),
-#             9000.0,
-#             is_explicit=True,
-#         )
+    @pytest.fixture
+    def podcast_2009(self):
+        return Podcast(
+            Artist("Joe Rogan", "Comedy"),
+            Album("The Joe Rogan Experience", True, [2009, 2010]),
+            9000.0,
+            is_explicit=True,
+        )
 
-#     @pytest.fixture
-#     def song_2017(self):
-#         return Song(
-#             Artist("Kendrick Lamar", "Hip-Hop"),
-#             Album("DAMN.", True, [2017, 2018]),
-#             220.0,
-#         )
+    @pytest.fixture
+    def song_2017(self):
+        return Song(
+            Artist("Kendrick Lamar", "Hip-Hop"),
+            Album("DAMN.", True, [2017, 2018]),
+            220.0,
+        )
 
-#     @pytest.fixture
-#     def podcast_1995(self):
-#         """Different type, same year as song_1995 — tests cross-type equality."""
-#         return Podcast(
-#             Artist("X", "Y"),
-#             Album("Vintage Show", False, [1995]),
-#             3600.0,
-#         )
+    @pytest.fixture
+    def podcast_1995(self):
+        """Different type, same year as song_1995 — tests cross-type equality."""
+        return Podcast(
+            Artist("X", "Y"),
+            Album("Vintage Show", False, [1995]),
+            3600.0,
+        )
 
-#     # --- __lt__ ---
+    # --- __lt__ ---
 
-#     def test_lt_true(self, song_1995, podcast_2009):
-#         assert song_1995 < podcast_2009
+    def test_lt_true(self, song_1995, podcast_2009):
+        assert song_1995 < podcast_2009
 
-#     def test_lt_false_when_greater(self, song_2017, song_1995):
-#         assert not (song_2017 < song_1995)
+    def test_lt_false_when_greater(self, song_2017, song_1995):
+        assert not (song_2017 < song_1995)
 
-#     def test_lt_false_when_equal(self, song_1995, podcast_1995):
-#         assert not (song_1995 < podcast_1995)
+    def test_lt_false_when_equal(self, song_1995, podcast_1995):
+        assert not (song_1995 < podcast_1995)
 
-#     # --- __eq__ ---
+    # --- __eq__ ---
 
-#     def test_eq_same_year_different_types(self, song_1995, podcast_1995):
-#         """A Song and a Podcast released in the same year should be equal."""
-#         assert song_1995 == podcast_1995
+    def test_eq_same_year_different_types(self, song_1995, podcast_1995):
+        """A Song and a Podcast released in the same year should be equal."""
+        assert song_1995 == podcast_1995
 
-#     def test_eq_same_type_same_year(self, song_1995):
-#         other = Song(
-#             Artist("B", "C"),
-#             Album("D", False, [1995]),
-#             100.0,
-#         )
-#         assert song_1995 == other
+    def test_eq_same_type_same_year(self, song_1995):
+        other = Song(
+            Artist("B", "C"),
+            Album("D", False, [1995]),
+            100.0,
+        )
+        assert song_1995 == other
 
-#     def test_not_eq_different_years(self, song_1995, song_2017):
-#         assert song_1995 != song_2017
+    def test_not_eq_different_years(self, song_1995, song_2017):
+        assert song_1995 != song_2017
 
-#     # --- __gt__ (provided by @total_ordering) ---
+    # --- __gt__ (provided by @total_ordering) ---
 
-#     def test_gt(self, song_2017, podcast_2009):
-#         assert song_2017 > podcast_2009
+    def test_gt(self, song_2017, podcast_2009):
+        assert song_2017 > podcast_2009
 
-#     # --- __le__ (provided by @total_ordering) ---
+    # --- __le__ (provided by @total_ordering) ---
 
-#     def test_le_when_less(self, song_1995, podcast_2009):
-#         assert song_1995 <= podcast_2009
+    def test_le_when_less(self, song_1995, podcast_2009):
+        assert song_1995 <= podcast_2009
 
-#     def test_le_when_equal(self, song_1995, podcast_1995):
-#         assert song_1995 <= podcast_1995
+    def test_le_when_equal(self, song_1995, podcast_1995):
+        assert song_1995 <= podcast_1995
 
-#     # --- sorted() ---
+    # --- sorted() ---
 
-#     def test_sorted_ascending(self, song_1995, podcast_2009, song_2017):
-#         tracks = [song_2017, song_1995, podcast_2009]
-#         result = sorted(tracks)
-#         assert result[0].release_year == 1995
-#         assert result[1].release_year == 2009
-#         assert result[2].release_year == 2017
+    def test_sorted_ascending(self, song_1995, podcast_2009, song_2017):
+        tracks = [song_2017, song_1995, podcast_2009]
+        result = sorted(tracks)
+        assert result[0].release_year == 1995
+        assert result[1].release_year == 2009
+        assert result[2].release_year == 2017
 
-#     def test_sorted_already_sorted_unchanged(self, song_1995, podcast_2009, song_2017):
-#         tracks = [song_1995, podcast_2009, song_2017]
-#         result = sorted(tracks)
-#         assert [t.release_year for t in result] == [1995, 2009, 2017]
+    def test_sorted_already_sorted_unchanged(self, song_1995, podcast_2009, song_2017):
+        tracks = [song_1995, podcast_2009, song_2017]
+        result = sorted(tracks)
+        assert [t.release_year for t in result] == [1995, 2009, 2017]
 
 
 # # =============================================================================
