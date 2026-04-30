@@ -15,7 +15,7 @@ from artist import Artist
 from album import Album
 from music_track import MusicTrack
 from song import Song
-# from podcast import Podcast
+from podcast import Podcast
 # from playlist import Playlist
 
 
@@ -278,116 +278,116 @@ class TestSong:
         assert isinstance(humble, MusicTrack)
 
 
-# # =============================================================================
-# #  Podcast tests
-# # =============================================================================
+# =============================================================================
+#  Podcast tests
+# =============================================================================
 
-# class TestPodcast:
+class TestPodcast:
 
-#     @pytest.fixture
-#     def jre_explicit(self):
-#         """9000 seconds → 02:30:00, explicit"""
-#         return Podcast(
-#             Artist("Joe Rogan", "Comedy"),
-#             Album("The Joe Rogan Experience", True, [2009, 2010]),
-#             9000.0,
-#             is_explicit=True,
-#         )
+    @pytest.fixture
+    def jre_explicit(self):
+        """9000 seconds → 02:30:00, explicit"""
+        return Podcast(
+            Artist("Joe Rogan", "Comedy"),
+            Album("The Joe Rogan Experience", True, [2009, 2010]),
+            9000.0,
+            is_explicit=True,
+        )
 
-#     @pytest.fixture
-#     def serial_default(self):
-#         """5400 seconds → 01:30:00, not explicit (default)"""
-#         return Podcast(
-#             Artist("Sarah Koenig", "Journalism"),
-#             Album("Serial", False, [2014, 2015]),
-#             5400.0,
-#         )
+    @pytest.fixture
+    def serial_default(self):
+        """5400 seconds → 01:30:00, not explicit (default)"""
+        return Podcast(
+            Artist("Sarah Koenig", "Journalism"),
+            Album("Serial", False, [2014, 2015]),
+            5400.0,
+        )
 
-#     # --- is_explicit field ---
+    # --- is_explicit field ---
 
-#     def test_explicit_true(self, jre_explicit):
-#         assert jre_explicit.is_explicit is True
+    def test_explicit_true(self, jre_explicit):
+        assert jre_explicit.is_explicit is True
 
-#     def test_explicit_defaults_to_false(self, serial_default):
-#         assert serial_default.is_explicit is False
+    def test_explicit_defaults_to_false(self, serial_default):
+        assert serial_default.is_explicit is False
 
-#     # --- Inherited fields ---
+    # --- Inherited fields ---
 
-#     def test_artist_name(self, jre_explicit):
-#         assert jre_explicit.artist.name == "Joe Rogan"
+    def test_artist_name(self, jre_explicit):
+        assert jre_explicit.artist.name == "Joe Rogan"
 
-#     def test_album_title(self, jre_explicit):
-#         assert jre_explicit.album.title == "The Joe Rogan Experience"
+    def test_album_title(self, jre_explicit):
+        assert jre_explicit.album.title == "The Joe Rogan Experience"
 
-#     def test_duration_seconds(self, jre_explicit):
-#         assert jre_explicit.duration_seconds == pytest.approx(9000.0)
+    def test_duration_seconds(self, jre_explicit):
+        assert jre_explicit.duration_seconds == pytest.approx(9000.0)
 
-#     def test_release_year(self, jre_explicit):
-#         assert jre_explicit.release_year == 2009
+    def test_release_year(self, jre_explicit):
+        assert jre_explicit.release_year == 2009
 
-#     def test_release_year_serial(self, serial_default):
-#         assert serial_default.release_year == 2014
+    def test_release_year_serial(self, serial_default):
+        assert serial_default.release_year == 2014
 
-#     # --- Concrete method inherited from MusicTrack ---
+    # --- Concrete method inherited from MusicTrack ---
 
-#     def test_total_play_time(self, jre_explicit):
-#         assert jre_explicit.total_play_time(3) == pytest.approx(27000.0)
+    def test_total_play_time(self, jre_explicit):
+        assert jre_explicit.total_play_time(3) == pytest.approx(27000.0)
 
-#     def test_total_play_time_serial(self, serial_default):
-#         assert serial_default.total_play_time(2) == pytest.approx(10800.0)
+    def test_total_play_time_serial(self, serial_default):
+        assert serial_default.total_play_time(2) == pytest.approx(10800.0)
 
-#     # --- play_time_formatted: HH:MM:SS ---
+    # --- play_time_formatted: HH:MM:SS ---
 
-#     def test_play_time_formatted_9000_seconds(self, jre_explicit):
-#         assert jre_explicit.play_time_formatted() == "02:30:00"
+    def test_play_time_formatted_9000_seconds(self, jre_explicit):
+        assert jre_explicit.play_time_formatted() == "02:30:00"
 
-#     def test_play_time_formatted_5400_seconds(self, serial_default):
-#         assert serial_default.play_time_formatted() == "01:30:00"
+    def test_play_time_formatted_5400_seconds(self, serial_default):
+        assert serial_default.play_time_formatted() == "01:30:00"
 
-#     def test_play_time_formatted_3661_seconds(self):
-#         p = Podcast(Artist("A", "B"), Album("C", True, [2020]), 3661.0)
-#         assert p.play_time_formatted() == "01:01:01"
+    def test_play_time_formatted_3661_seconds(self):
+        p = Podcast(Artist("A", "B"), Album("C", True, [2020]), 3661.0)
+        assert p.play_time_formatted() == "01:01:01"
 
-#     def test_play_time_formatted_3600_seconds(self):
-#         p = Podcast(Artist("A", "B"), Album("C", True, [2020]), 3600.0)
-#         assert p.play_time_formatted() == "01:00:00"
+    def test_play_time_formatted_3600_seconds(self):
+        p = Podcast(Artist("A", "B"), Album("C", True, [2020]), 3600.0)
+        assert p.play_time_formatted() == "01:00:00"
 
-#     def test_play_time_formatted_zero_seconds(self):
-#         p = Podcast(Artist("A", "B"), Album("C", True, [2020]), 0.0)
-#         assert p.play_time_formatted() == "00:00:00"
+    def test_play_time_formatted_zero_seconds(self):
+        p = Podcast(Artist("A", "B"), Album("C", True, [2020]), 0.0)
+        assert p.play_time_formatted() == "00:00:00"
 
-#     def test_play_time_formatted_has_two_colons(self, jre_explicit):
-#         """HH:MM:SS must have exactly two colons."""
-#         assert jre_explicit.play_time_formatted().count(":") == 2
+    def test_play_time_formatted_has_two_colons(self, jre_explicit):
+        """HH:MM:SS must have exactly two colons."""
+        assert jre_explicit.play_time_formatted().count(":") == 2
 
-#     def test_play_time_formatted_length_is_eight(self, jre_explicit):
-#         """HH:MM:SS must be exactly 8 characters."""
-#         assert len(jre_explicit.play_time_formatted()) == 8
+    def test_play_time_formatted_length_is_eight(self, jre_explicit):
+        """HH:MM:SS must be exactly 8 characters."""
+        assert len(jre_explicit.play_time_formatted()) == 8
 
-#     # --- __str__ ---
+    # --- __str__ ---
 
-#     def test_str_contains_artist(self, jre_explicit):
-#         assert "(Joe Rogan, Comedy)" in str(jre_explicit)
+    def test_str_contains_artist(self, jre_explicit):
+        assert "(Joe Rogan, Comedy)" in str(jre_explicit)
 
-#     def test_str_contains_album_title(self, jre_explicit):
-#         assert "The Joe Rogan Experience" in str(jre_explicit)
+    def test_str_contains_album_title(self, jre_explicit):
+        assert "The Joe Rogan Experience" in str(jre_explicit)
 
-#     def test_str_contains_formatted_duration(self, jre_explicit):
-#         assert "02:30:00" in str(jre_explicit)
+    def test_str_contains_formatted_duration(self, jre_explicit):
+        assert "02:30:00" in str(jre_explicit)
 
-#     def test_str_contains_is_explicit_true(self, jre_explicit):
-#         assert "True" in str(jre_explicit)
+    def test_str_contains_is_explicit_true(self, jre_explicit):
+        assert "True" in str(jre_explicit)
 
-#     def test_str_contains_is_explicit_false(self, serial_default):
-#         assert "False" in str(serial_default)
+    def test_str_contains_is_explicit_false(self, serial_default):
+        assert "False" in str(serial_default)
 
-#     def test_str_contains_explicit_keyword(self, jre_explicit):
-#         assert "explicit" in str(jre_explicit).lower()
+    def test_str_contains_explicit_keyword(self, jre_explicit):
+        assert "explicit" in str(jre_explicit).lower()
 
-#     # --- isinstance checks ---
+    # --- isinstance checks ---
 
-#     def test_podcast_is_instance_of_music_track(self, jre_explicit):
-#         assert isinstance(jre_explicit, MusicTrack)
+    def test_podcast_is_instance_of_music_track(self, jre_explicit):
+        assert isinstance(jre_explicit, MusicTrack)
 
 
 # # =============================================================================
