@@ -12,7 +12,7 @@ All tests must pass for full credit.
 import pytest
 
 from artist import Artist
-# from album import Album
+from album import Album
 # from music_track import MusicTrack
 # from song import Song
 # from podcast import Podcast
@@ -59,86 +59,86 @@ class TestArtist:
 #  Album tests
 # =============================================================================
 
-# class TestAlbum:
+class TestAlbum:
 
-#     def test_constructor_stores_title(self):
-#         al = Album("DAMN.", True, [2017, 2018])
-#         assert al.title == "DAMN."
+    def test_constructor_stores_title(self):
+        al = Album("DAMN.", True, [2017, 2018])
+        assert al.title == "DAMN."
 
-#     def test_constructor_stores_active(self):
-#         al = Album("DAMN.", True, [2017, 2018])
-#         assert al.active is True
+    def test_constructor_stores_active(self):
+        al = Album("DAMN.", True, [2017, 2018])
+        assert al.active is True
 
-#     def test_constructor_stores_years(self):
-#         al = Album("DAMN.", True, [2017, 2018])
-#         assert al.years == [2017, 2018]
+    def test_constructor_stores_years(self):
+        al = Album("DAMN.", True, [2017, 2018])
+        assert al.years == [2017, 2018]
 
-#     def test_debut_year_returns_first(self):
-#         al = Album("F", True, [1995, 1996, 1997])
-#         assert al.debut_year == 1995
+    def test_debut_year_returns_first(self):
+        al = Album("F", True, [1995, 1996, 1997])
+        assert al.debut_year == 1995
 
-#     def test_debut_year_single_entry(self):
-#         al = Album("G", False, [2020])
-#         assert al.debut_year == 2020
+    def test_debut_year_single_entry(self):
+        al = Album("G", False, [2020])
+        assert al.debut_year == 2020
 
-#     def test_str_contains_title(self):
-#         al = Album("DAMN.", True, [2017, 2018])
-#         assert "DAMN." in str(al)
+    def test_str_contains_title(self):
+        al = Album("DAMN.", True, [2017, 2018])
+        assert "DAMN." in str(al)
 
-#     def test_str_contains_active_flag(self):
-#         al = Album("DAMN.", True, [2017, 2018])
-#         assert "True" in str(al)
+    def test_str_contains_active_flag(self):
+        al = Album("DAMN.", True, [2017, 2018])
+        assert "True" in str(al)
 
-#     def test_str_contains_debut_year(self):
-#         al = Album("DAMN.", True, [2017, 2018])
-#         assert "2017" in str(al)
+    def test_str_contains_debut_year(self):
+        al = Album("DAMN.", True, [2017, 2018])
+        assert "2017" in str(al)
 
-#     def test_str_inactive_album(self):
-#         al = Album("Jagged Little Pill", False, [1995, 1996])
-#         s = str(al)
-#         assert "Jagged Little Pill" in s
-#         assert "False" in s
-#         assert "1995" in s
+    def test_str_inactive_album(self):
+        al = Album("Jagged Little Pill", False, [1995, 1996])
+        s = str(al)
+        assert "Jagged Little Pill" in s
+        assert "False" in s
+        assert "1995" in s
 
-#     # --- ValueError on empty years ---
+    # --- ValueError on empty years ---
 
-#     def test_empty_years_raises_value_error(self):
-#         with pytest.raises(ValueError):
-#             Album("Ghost", False, [])
+    def test_empty_years_raises_value_error(self):
+        with pytest.raises(ValueError):
+            Album("Ghost", False, [])
 
-#     def test_value_error_message_is_descriptive(self):
-#         """The error message should mention the album title or 'years'."""
-#         with pytest.raises(ValueError, match=r"(?i)(year|empty|non-empty|Ghost)"):
-#             Album("Ghost", False, [])
+    def test_value_error_message_is_descriptive(self):
+        """The error message should mention the album title or 'years'."""
+        with pytest.raises(ValueError, match=r"(?i)(year|empty|non-empty|Ghost)"):
+            Album("Ghost", False, [])
 
-#     # --- Defensive copy on input ---
+    # --- Defensive copy on input ---
 
-#     def test_years_input_defensive_copy(self):
-#         """Mutating the original list must NOT affect the stored years."""
-#         original = [2000, 2001]
-#         al = Album("Test", True, original)
-#         original.append(2002)
-#         assert len(al.years) == 2
+    def test_years_input_defensive_copy(self):
+        """Mutating the original list must NOT affect the stored years."""
+        original = [2000, 2001]
+        al = Album("Test", True, original)
+        original.append(2002)
+        assert len(al.years) == 2
 
-#     def test_years_input_defensive_copy_clear(self):
-#         original = [1999]
-#         al = Album("Test", False, original)
-#         original.clear()
-#         assert al.years == [1999]
+    def test_years_input_defensive_copy_clear(self):
+        original = [1999]
+        al = Album("Test", False, original)
+        original.clear()
+        assert al.years == [1999]
 
-#     # --- Defensive copy on output ---
+    # --- Defensive copy on output ---
 
-#     def test_years_getter_returns_copy(self):
-#         """Mutating the returned list must NOT affect internal data."""
-#         al = Album("Test", True, [2000, 2001])
-#         returned = al.years
-#         returned.append(9999)
-#         assert len(al.years) == 2
+    def test_years_getter_returns_copy(self):
+        """Mutating the returned list must NOT affect internal data."""
+        al = Album("Test", True, [2000, 2001])
+        returned = al.years
+        returned.append(9999)
+        assert len(al.years) == 2
 
-#     def test_years_getter_clear_does_not_affect_internal(self):
-#         al = Album("Test", False, [2010])
-#         al.years.clear()
-#         assert al.years == [2010]
+    def test_years_getter_clear_does_not_affect_internal(self):
+        al = Album("Test", False, [2010])
+        al.years.clear()
+        assert al.years == [2010]
 
 
 # # =============================================================================
