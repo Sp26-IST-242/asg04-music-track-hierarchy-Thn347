@@ -14,7 +14,7 @@ import pytest
 from artist import Artist
 from album import Album
 from music_track import MusicTrack
-# from song import Song
+from song import Song
 # from podcast import Podcast
 # from playlist import Playlist
 
@@ -170,112 +170,112 @@ class TestMusicTrackAbstract:
             )
 
 
-# # =============================================================================
-# #  Song tests
-# # =============================================================================
+# =============================================================================
+#  Song tests
+# =============================================================================
 
-# class TestSong:
+class TestSong:
 
-#     @pytest.fixture
-#     def humble(self):
-#         """220 seconds → 03:40"""
-#         return Song(
-#             Artist("Kendrick Lamar", "Hip-Hop"),
-#             Album("DAMN.", True, [2017, 2018]),
-#             220.0,
-#         )
+    @pytest.fixture
+    def humble(self):
+        """220 seconds → 03:40"""
+        return Song(
+            Artist("Kendrick Lamar", "Hip-Hop"),
+            Album("DAMN.", True, [2017, 2018]),
+            220.0,
+        )
 
-#     @pytest.fixture
-#     def you_oughta_know(self):
-#         """245 seconds → 04:05"""
-#         return Song(
-#             Artist("Alanis Morissette", "Alternative"),
-#             Album("Jagged Little Pill", False, [1995, 1996]),
-#             245.0,
-#         )
+    @pytest.fixture
+    def you_oughta_know(self):
+        """245 seconds → 04:05"""
+        return Song(
+            Artist("Alanis Morissette", "Alternative"),
+            Album("Jagged Little Pill", False, [1995, 1996]),
+            245.0,
+        )
 
-#     # --- Inherited fields via Vehicle parent ---
+    # --- Inherited fields via Vehicle parent ---
 
-#     def test_artist_name(self, humble):
-#         assert humble.artist.name == "Kendrick Lamar"
+    def test_artist_name(self, humble):
+        assert humble.artist.name == "Kendrick Lamar"
 
-#     def test_artist_genre(self, humble):
-#         assert humble.artist.genre == "Hip-Hop"
+    def test_artist_genre(self, humble):
+        assert humble.artist.genre == "Hip-Hop"
 
-#     def test_album_title(self, humble):
-#         assert humble.album.title == "DAMN."
+    def test_album_title(self, humble):
+        assert humble.album.title == "DAMN."
 
-#     def test_duration_seconds(self, humble):
-#         assert humble.duration_seconds == pytest.approx(220.0)
+    def test_duration_seconds(self, humble):
+        assert humble.duration_seconds == pytest.approx(220.0)
 
-#     def test_release_year(self, humble):
-#         assert humble.release_year == 2017
+    def test_release_year(self, humble):
+        assert humble.release_year == 2017
 
-#     def test_release_year_different_song(self, you_oughta_know):
-#         assert you_oughta_know.release_year == 1995
+    def test_release_year_different_song(self, you_oughta_know):
+        assert you_oughta_know.release_year == 1995
 
-#     # --- Concrete method inherited from MusicTrack ---
+    # --- Concrete method inherited from MusicTrack ---
 
-#     def test_total_play_time_ten_plays(self, humble):
-#         assert humble.total_play_time(10) == pytest.approx(2200.0)
+    def test_total_play_time_ten_plays(self, humble):
+        assert humble.total_play_time(10) == pytest.approx(2200.0)
 
-#     def test_total_play_time_zero_plays(self, humble):
-#         assert humble.total_play_time(0) == pytest.approx(0.0)
+    def test_total_play_time_zero_plays(self, humble):
+        assert humble.total_play_time(0) == pytest.approx(0.0)
 
-#     def test_total_play_time_one_play(self, humble):
-#         assert humble.total_play_time(1) == pytest.approx(220.0)
+    def test_total_play_time_one_play(self, humble):
+        assert humble.total_play_time(1) == pytest.approx(220.0)
 
-#     # --- play_time_formatted: MM:SS ---
+    # --- play_time_formatted: MM:SS ---
 
-#     def test_play_time_formatted_220_seconds(self, humble):
-#         assert humble.play_time_formatted() == "03:40"
+    def test_play_time_formatted_220_seconds(self, humble):
+        assert humble.play_time_formatted() == "03:40"
 
-#     def test_play_time_formatted_245_seconds(self, you_oughta_know):
-#         assert you_oughta_know.play_time_formatted() == "04:05"
+    def test_play_time_formatted_245_seconds(self, you_oughta_know):
+        assert you_oughta_know.play_time_formatted() == "04:05"
 
-#     def test_play_time_formatted_65_seconds(self):
-#         s = Song(Artist("A", "B"), Album("C", True, [2020]), 65.0)
-#         assert s.play_time_formatted() == "01:05"
+    def test_play_time_formatted_65_seconds(self):
+        s = Song(Artist("A", "B"), Album("C", True, [2020]), 65.0)
+        assert s.play_time_formatted() == "01:05"
 
-#     def test_play_time_formatted_zero_seconds(self):
-#         s = Song(Artist("A", "B"), Album("C", True, [2020]), 0.0)
-#         assert s.play_time_formatted() == "00:00"
+    def test_play_time_formatted_zero_seconds(self):
+        s = Song(Artist("A", "B"), Album("C", True, [2020]), 0.0)
+        assert s.play_time_formatted() == "00:00"
 
-#     def test_play_time_formatted_exactly_one_minute(self):
-#         s = Song(Artist("A", "B"), Album("C", True, [2020]), 60.0)
-#         assert s.play_time_formatted() == "01:00"
+    def test_play_time_formatted_exactly_one_minute(self):
+        s = Song(Artist("A", "B"), Album("C", True, [2020]), 60.0)
+        assert s.play_time_formatted() == "01:00"
 
-#     def test_play_time_formatted_59_seconds(self):
-#         s = Song(Artist("A", "B"), Album("C", True, [2020]), 59.0)
-#         assert s.play_time_formatted() == "00:59"
+    def test_play_time_formatted_59_seconds(self):
+        s = Song(Artist("A", "B"), Album("C", True, [2020]), 59.0)
+        assert s.play_time_formatted() == "00:59"
 
-#     # --- __str__ ---
+    # --- __str__ ---
 
-#     def test_str_contains_artist(self, humble):
-#         assert "(Kendrick Lamar, Hip-Hop)" in str(humble)
+    def test_str_contains_artist(self, humble):
+        assert "(Kendrick Lamar, Hip-Hop)" in str(humble)
 
-#     def test_str_contains_album_title(self, humble):
-#         assert "DAMN." in str(humble)
+    def test_str_contains_album_title(self, humble):
+        assert "DAMN." in str(humble)
 
-#     def test_str_contains_duration(self, humble):
-#         assert "03:40" in str(humble)
+    def test_str_contains_duration(self, humble):
+        assert "03:40" in str(humble)
 
-#     def test_str_does_not_contain_explicit(self, humble):
-#         """Song __str__ should not mention 'explicit'."""
-#         assert "explicit" not in str(humble).lower()
+    def test_str_does_not_contain_explicit(self, humble):
+        """Song __str__ should not mention 'explicit'."""
+        assert "explicit" not in str(humble).lower()
 
-#     def test_str_does_not_contain_hh_mm_ss_format(self, humble):
-#         """Song uses MM:SS, not HH:MM:SS."""
-#         # Should NOT contain two colons
-#         assert str(humble).count(":") == 1 or "03:40" in str(humble)
-#         # More direct: the formatted time should be exactly 5 chars (MM:SS)
-#         assert humble.play_time_formatted() == "03:40"
-#         assert len(humble.play_time_formatted()) == 5
+    def test_str_does_not_contain_hh_mm_ss_format(self, humble):
+        """Song uses MM:SS, not HH:MM:SS."""
+        # Should NOT contain two colons
+        assert str(humble).count(":") == 1 or "03:40" in str(humble)
+        # More direct: the formatted time should be exactly 5 chars (MM:SS)
+        assert humble.play_time_formatted() == "03:40"
+        assert len(humble.play_time_formatted()) == 5
 
-#     # --- isinstance checks ---
+    # --- isinstance checks ---
 
-#     def test_song_is_instance_of_music_track(self, humble):
-#         assert isinstance(humble, MusicTrack)
+    def test_song_is_instance_of_music_track(self, humble):
+        assert isinstance(humble, MusicTrack)
 
 
 # # =============================================================================
