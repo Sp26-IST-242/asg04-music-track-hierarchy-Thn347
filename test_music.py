@@ -13,7 +13,7 @@ import pytest
 
 from artist import Artist
 from album import Album
-# from music_track import MusicTrack
+from music_track import MusicTrack
 # from song import Song
 # from podcast import Podcast
 # from playlist import Playlist
@@ -141,33 +141,33 @@ class TestAlbum:
         assert al.years == [2010]
 
 
-# # =============================================================================
-# #  MusicTrack abstract-contract tests
-# # =============================================================================
+# =============================================================================
+#  MusicTrack abstract-contract tests
+# =============================================================================
 
-# class TestMusicTrackAbstract:
+class TestMusicTrackAbstract:
 
-#     def test_cannot_instantiate_music_track_directly(self):
-#         """MusicTrack is abstract and must raise TypeError on direct creation."""
-#         with pytest.raises(TypeError):
-#             MusicTrack(
-#                 Artist("X", "Y"),
-#                 Album("Z", True, [2020]),
-#                 200.0,
-#             )
+    def test_cannot_instantiate_music_track_directly(self):
+        """MusicTrack is abstract and must raise TypeError on direct creation."""
+        with pytest.raises(TypeError):
+            MusicTrack(
+                Artist("X", "Y"),
+                Album("Z", True, [2020]),
+                200.0,
+            )
 
-#     def test_subclass_without_play_time_formatted_raises(self):
-#         """A subclass missing play_time_formatted must raise TypeError."""
-#         with pytest.raises(TypeError):
+    def test_subclass_without_play_time_formatted_raises(self):
+        """A subclass missing play_time_formatted must raise TypeError."""
+        with pytest.raises(TypeError):
 
-#             class IncompleteTrack(MusicTrack):
-#                 pass  # play_time_formatted not implemented
+            class IncompleteTrack(MusicTrack):
+                pass  # play_time_formatted not implemented
 
-#             IncompleteTrack(
-#                 Artist("X", "Y"),
-#                 Album("Z", True, [2020]),
-#                 200.0,
-#             )
+            IncompleteTrack(
+                Artist("X", "Y"),
+                Album("Z", True, [2020]),
+                200.0,
+            )
 
 
 # # =============================================================================
